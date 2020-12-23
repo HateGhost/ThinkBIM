@@ -1,0 +1,55 @@
+<form onsubmit="return false" data-auto="true" action="{:request()->url()}" method="post" class='layui-form layui-card' autocomplete="off">
+    <div class="layui-card-body padding-top-20">
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="aliyuncs.domain">
+                <span class="color-green font-w7">访问域名</span><br><span class="nowrap color-desc">Domain</span>
+            </label>
+            <div class="layui-input-block">
+                <input id="aliyuncs.domain" type="text" name="aliyuncs.domain" value="{:sysconf('aliyuncs.domain')}" placeholder="请输入上传后的访问域名 (非必填项)" class="layui-input">
+                <p class="help-block">填写接口请求地址</p>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="aliyuncs.sign_name">
+                <span class="color-green font-w7">签名名称</span><br><span class="nowrap color-desc">SignName</span>
+            </label>
+            <div class="layui-input-block">
+                <input id="aliyuncs.sign_name" type="text" name="aliyuncs.sign_name" value="{:sysconf('aliyuncs.sign_name')}" placeholder="请输入上传后的访问域名 (非必填项)" class="layui-input">
+                <p class="help-block">填写签名名称</p>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="aliyuncs.template_code">
+                <span class="color-green font-w7">模板ID</span><br><span class="nowrap color-desc">Domain</span>
+            </label>
+            <div class="layui-input-block">
+                <input id="aliyuncs.template_code" type="text" name="aliyuncs.template_code" value="{:sysconf('aliyuncs.template_code')}" placeholder="请输入上传后的访问域名 (非必填项)" class="layui-input">
+                <p class="help-block">填写模板ID</p>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="aliyuncs.AccessKeyId">
+                <span class="color-green font-w7">访问密钥</span><br><span class="nowrap color-desc">AccessKey</span>
+            </label>
+            <div class="layui-input-block">
+                <input id="aliyuncs.AccessKeyId" type="text" name="aliyuncs.AccessKeyId" value="{:sysconf('aliyuncs.AccessKeyId')}" placeholder="请输入上传后的访问域名 (非必填项)" class="layui-input">
+                <p class="help-block">填写访问密钥</p>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="aliyuncs.accessKeySecret">
+                <span class="color-green font-w7">安全密钥</span><br><span class="nowrap color-desc">SecretKey</span>
+            </label>
+            <div class="layui-input-block">
+                <input id="aliyuncs.accessKeySecret" type="text" name="aliyuncs.accessKeySecret" value="{:sysconf('aliyuncs.accessKeySecret')}" placeholder="请输入上传后的访问域名 (非必填项)" class="layui-input">
+                <p class="help-block">填写安全密钥</p>
+            </div>
+        </div>
+        <div class="hr-line-dashed margin-left-40"></div>
+        <input type="hidden" name="storage.type" value="aliyuncs">
+        <div class="layui-form-item text-center padding-left-40">
+            <button class="layui-btn" type="submit">保存配置</button>
+            <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消修改吗？" data-close>取消修改</button>
+        </div>
+    </div>
+</form>
