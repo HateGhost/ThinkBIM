@@ -11,5 +11,3 @@ Route::group(function () {
 })->middleware([
     app\v1\middleware\AuthTokenMiddleware::class
 ]);
-
-

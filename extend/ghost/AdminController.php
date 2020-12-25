@@ -11,6 +11,14 @@ use think\middleware\FormTokenCheck;
 class AdminController extends BaseController
 {
 
+    public function error($info, $data = '{-null-}', $code = 0): void
+    {
+        if ($data === '{-null-}') $data = new \stdClass();
+        throw new HttpResponseException(json([
+            'code' => $code, 'info' => $info, 'data' => $data,
+        ]));
+    }
+
     public function success($info, $data = '{-null-}', $code = 1): void
     {
         // if ($this->csrf_state) {
