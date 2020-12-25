@@ -22,6 +22,7 @@ class Index
 
     public function cc()
     {
+        echo memory_get_usage().PHP_EOL;
         echo 1;die;
     }
 }
