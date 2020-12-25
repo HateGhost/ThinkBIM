@@ -1,7 +1,7 @@
 /.idea
 /.vscode
 /vendor
-/runtime/*
+/runtime/
 *.log
 .env
 .DS_Store
