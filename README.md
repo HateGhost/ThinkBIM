@@ -27,8 +27,14 @@ git clone https://github.com/HateGhost/ThinkBIM.git
 composer install
 ~~~
 
+## 登录
+* 前端 www.hateghost.com/index
+* 接口 www.hateghost.com/v1
+* 后端 www.hateghost.com/admin
+
 
 ## 文档
 
 [ThinkPHP v6.x](https://www.kancloud.cn/manual/thinkphp6_0/content)
-
+[ThinkAdmin](https://thinkadmin.top/README)
+[]

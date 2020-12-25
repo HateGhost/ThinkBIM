@@ -16,6 +16,7 @@
 namespace app\admin\controller;
 
 
+use app\Request;
 use ghost\AdminController;
 use ghost\library\DataTree;
 use think\facade\View;
@@ -145,13 +146,14 @@ class Menu extends AdminController
      * @auth true
      * @throws \think\db\exception\DbException
      */
-    public function state()
+    public function state(Request $request)
     {
-        $this->_applyFormToken();
-        $this->_save($this->table, $this->_vali([
-            'status.in:0,1'  => '状态值范围异常！',
-            'status.require' => '状态值不能为空！',
-        ]));
+        $post = $request->post();
+        // print_r($request->post());die;
+        $this->app->db->name($this->table)->whereIn('id', $post['id'])->update([
+            'status' => $post['status']
+        ]);
+        $this->success('状态修改成功');
     }
 
     /**

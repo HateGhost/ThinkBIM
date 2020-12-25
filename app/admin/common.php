@@ -16,12 +16,11 @@ if (!function_exists('sysconf')) {
      */
     function sysconf($name = '', $value = null)
     {
-        return  '';
-        // if (is_null($value) && is_string($name)) {
-        //     return SystemService::instance()->get($name);
-        // } else {
-        //     return SystemService::instance()->set($name, $value);
-        // }
+        if (is_null($value) && is_string($name)) {
+            return SystemService::instance()->get($name);
+        } else {
+            return SystemService::instance()->set($name, $value);
+        }
     }
 }
 
