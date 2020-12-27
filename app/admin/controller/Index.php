@@ -3,11 +3,12 @@ declare (strict_types = 1);
 
 namespace app\admin\controller;
 
+use ghost\AdminController;
 use ghost\AdminService;
 use ghost\MenuService;
 use think\facade\View;
 
-class Index
+class Index extends AdminController
 {
     public function index()
     {
@@ -23,19 +24,22 @@ class Index
     public function info($id)
     {
         if (AdminService::instance()->getUserId() === intval($id)) {
-
-
+            if(request()->isPost()) {
+                $this->app->db->name('SystemUser')->update(request()->post());
+                $this->success('用户信息修改成功');
+            }
+            $user = $this->app->db->name('SystemUser')->where('id', $id)->find();
+            View::assign('vo', $user);
             return View::fetch('user/form');
-
-
-            // $this->_form('SystemUser', 'admin@user/form', 'id', [], ['id' => $id]);
         } else {
-            // $this->error('只能修改自己的资料！');
+            $this->error('只能修改自己的资料！');
         }
     }
 
     public function pass($id)
     {
+        $user = $this->app->db->name('SystemUser')->where('id', $id)->find();
+        View::assign('vo', $user);
         View::assign('verify', true);
         return View::fetch('user/pass');
     }

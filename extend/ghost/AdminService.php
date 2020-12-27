@@ -42,7 +42,7 @@ class AdminService extends Service
      */
     public function isSuper(): bool
     {
-        return $this->getUserName() === 'admin';
+        return $this->getUserName() === 'admin' && $this->getUserId() == 1;
     }
 
     /**

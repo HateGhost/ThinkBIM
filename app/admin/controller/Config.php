@@ -13,11 +13,9 @@ class Config extends AdminController
 {
     public function index(Request $request)
     {
-        // if($request->isAjax()) {
-        //     $this->success('登录成功', '/admin');
-        // }
 
-        View::assign('title','系统登录');
+        View::assign('title', '系统登录');
+        View::assign('app', ['isDebug' => false]);
 
         View::assign('isSuper', AdminService::instance()->isSuper());
         // View::assign('version', ModuleService::instance()->getVersion());

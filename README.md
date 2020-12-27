@@ -28,13 +28,13 @@ composer install
 ~~~
 
 ## 登录
-* 前端 www.hateghost.com/index
-* 接口 www.hateghost.com/v1
-* 后端 www.hateghost.com/admin
+* 前端 www.thinkbim.cn/index
+* 接口 www.thinkbim.cn/v1
+* 后端 www.thinkbim.cn/admin
 
 
-## 文档
+## 感谢
 
 [ThinkPHP v6.x](https://www.kancloud.cn/manual/thinkphp6_0/content)
 [ThinkAdmin](https://thinkadmin.top/README)
-[]
+[CatchAdmin](https://www.catchadmin.com/docs/)

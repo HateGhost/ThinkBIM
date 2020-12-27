@@ -10,6 +10,10 @@ use think\middleware\FormTokenCheck;
 
 class AdminController extends BaseController
 {
+    public function _form()
+    {
+
+    }
 
     public function error($info, $data = '{-null-}', $code = 0): void
     {

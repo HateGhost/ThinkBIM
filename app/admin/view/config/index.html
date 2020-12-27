@@ -18,7 +18,7 @@
     </div>
     <div class="layui-card-body">
         <div class="layui-btn-group shadow-mini nowrap">
-            {if $app->isDebug()}
+            {if $app['isDebug']}
             <a class="layui-btn layui-btn-sm layui-btn-active">以开发模式运行</a>
             <a class="layui-btn layui-btn-sm layui-btn-primary" data-load="{:url('admin/api.plugs/debug')}?state=1">以产品模式运行</a>
             {else}
@@ -139,7 +139,7 @@
             </tr>
             <tr>
                 <td class="nowrap text-center">管理程序</td>
-                <td><a target="_blank" href="https://thinkadmin.top">ThinkAdmin Version {$version|default='6.0.0'}</a></td>
+                <td><a target="_blank" href="https://www.hateghost.com">ThinkBIM Version {$version|default='1.0.0'}</a></td>
             </tr>
             <tr>
                 <td class="nowrap text-center">服务器信息</td>

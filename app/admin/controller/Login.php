@@ -56,11 +56,19 @@ class Login extends AdminController
         return View::fetch();
     }
 
+
     public function captcha()
     {
         $image = CaptchaService::instance()->initialize();
         $captcha = ['image' => $image->getData(), 'uniqid' => $image->getUniqid()];
 
         $this->success('生成验证码成功', $captcha);
+    }
+
+    public function out()
+    {
+        $this->app->session->clear();
+        $this->app->session->destroy();
+        $this->success('退出登录成功!', sysuri('admin/login/index'));
     }
 }
