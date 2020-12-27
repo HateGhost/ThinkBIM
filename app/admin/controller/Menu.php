@@ -18,6 +18,7 @@ namespace app\admin\controller;
 
 use app\Request;
 use ThinkBIM\AdminController;
+use ThinkBIM\AdminService;
 use ThinkBIM\library\DataTree;
 use ThinkBIM\MenuService;
 use ThinkBIM\NodeService;
@@ -79,7 +80,7 @@ class Menu extends AdminController
      */
     public function add()
     {
-        // $vo = $this->app->db->name('SystemMenu')->where('id', input('id'))->find();
+
         // $this->_applyFormToken();
         // $this->_form($this->table, 'form');
         $menu = $this->app->db->name($this->table)->order('sort desc,id asc')->column('id,pid,icon,url,node,title,params', 'id');
@@ -110,22 +111,28 @@ class Menu extends AdminController
      */
     public function edit()
     {
+        $this->_form_filter();
+
         // $this->_applyFormToken();
         // $this->_form($this->table, 'form');
-        View::assign('menus', MenuService::instance()->getList());
-        View::assign('nodes', []);
-        View::assign('vo', ['id' => 1]);
+
+        if(request()->isPost()) {
+            $this->success('系统菜单修改成功！', 'javascript:location.reload()');
+        }
+
+
         return View::fetch('form');
 
     }
 
     /**
      * 表单数据处理
-     * @param array $vo
-     * @throws \ReflectionException
      */
-    protected function _form_filter(array &$vo)
+    protected function _form_filter()
     {
+        if(input('?id')) {
+            $vo = $this->app->db->name('SystemMenu')->where('id', input('id'))->find();
+        }
         if ($this->request->isGet()) {
             /* 清理权限节点 */
             if ($this->app->isDebug()) {
@@ -134,21 +141,26 @@ class Menu extends AdminController
             /* 选择自己的上级菜单 */
             $vo['pid'] = $vo['pid'] ?? input('pid', '0');
             /* 读取系统功能节点 */
-            $this->auths = [];
-            $this->nodes = MenuService::instance()->getList();
+            $auths = [];
+            $nodes = MenuService::instance()->getList();
             foreach (NodeService::instance()->getMethods() as $node => $item) {
                 if ($item['isauth'] && substr_count($node, '/') >= 2) {
-                    $this->auths[] = ['node' => $node, 'title' => $item['title']];
+                    $auths[] = ['node' => $node, 'title' => $item['title']];
                 }
             }
             /* 列出可选上级菜单 */
             $menus = $this->app->db->name($this->table)->order('sort desc,id asc')->column('id,pid,icon,url,node,title,params', 'id');
-            $this->menus = DataExtend::arr2table(array_merge($menus, [['id' => '0', 'pid' => '-1', 'url' => '#', 'title' => '顶部菜单']]));
-            if (isset($vo['id'])) foreach ($this->menus as $menu) if ($menu['id'] === $vo['id']) $vo = $menu;
-            foreach ($this->menus as $key => $menu) if ($menu['spt'] >= 3 || $menu['url'] !== '#') unset($this->menus[$key]);
+            $menus = DataTree::arr2table(array_merge($menus, [['id' => '0', 'pid' => '-1', 'url' => '#', 'title' => '顶部菜单']]));
+            if (isset($vo['id'])) foreach ($menus as $menu) if ($menu['id'] === $vo['id']) $vo = $menu;
+            foreach ($menus as $key => $menu) if ($menu['spt'] >= 3 || $menu['url'] !== '#') unset($menus[$key]);
             if (isset($vo['spt']) && isset($vo['spc']) && in_array($vo['spt'], [1, 2]) && $vo['spc'] > 0) {
-                foreach ($this->menus as $key => $menu) if ($vo['spt'] <= $menu['spt']) unset($this->menus[$key]);
+                foreach ($menus as $key => $menu) if ($vo['spt'] <= $menu['spt']) unset($menus[$key]);
             }
+
+            View::assign('auths', $auths ?? []);
+            View::assign('menus', $menus);
+            View::assign('nodes', $nodes);
+            View::assign('vo', $vo);
         }
     }
 
@@ -188,5 +200,6 @@ class Menu extends AdminController
         $this->_applyFormToken();
         $this->_delete($this->table);
     }
+
 
 }

@@ -37,10 +37,9 @@ class Plugs extends AdminController
      */
     public function icon()
     {
-        echo 1;
         View::assign('title', '图标选择器');
         View::assign('field', request()->get('field', 'icon'));
-        View::fetch('api/icon');
+        return View::fetch('api/icon');
     }
 
 
