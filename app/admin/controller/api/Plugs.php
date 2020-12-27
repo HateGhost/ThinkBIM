@@ -15,13 +15,14 @@
 
 namespace app\admin\controller\api;
 
-use ghost\AdminController;
+use ThinkBIM\AdminController;
 // use think\admin\Controller;
 // use think\admin\service\AdminService;
 // use think\admin\service\SystemService;
-use ghost\AdminService;
-use ghost\SystemService;
+use ThinkBIM\AdminService;
+use ThinkBIM\SystemService;
 use think\exception\HttpResponseException;
+use think\facade\View;
 
 /**
  * 通用插件管理
@@ -36,9 +37,10 @@ class Plugs extends AdminController
      */
     public function icon()
     {
-        $this->title = '图标选择器';
-        $this->field = $this->app->request->get('field', 'icon');
-        $this->fetch(realpath(__DIR__ . '/../../view/api/icon.html'));
+        echo 1;
+        View::assign('title', '图标选择器');
+        View::assign('field', request()->get('field', 'icon'));
+        View::fetch('api/icon');
     }
 
 

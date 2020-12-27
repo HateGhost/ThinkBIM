@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace ghost;
+namespace ThinkBIM;
 
 use think\Paginator;
 use think\response\Json;

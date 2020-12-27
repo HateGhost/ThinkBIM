@@ -3,8 +3,8 @@ declare (strict_types = 1);
 
 namespace app\v1\controller;
 
-use ghost\GhostAuth;
-use ghost\GhostResponse;
+use ThinkBIM\GhostAuth;
+use ThinkBIM\GhostResponse;
 use thans\jwt\facade\JWTAuth;
 
 class Login

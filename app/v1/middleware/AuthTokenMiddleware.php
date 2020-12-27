@@ -2,8 +2,8 @@
 
 namespace app\v1\middleware;
 
-use ghost\Code;
-use ghost\exceptions\FailedException;
+use ThinkBIM\Code;
+use ThinkBIM\exceptions\FailedException;
 use thans\jwt\exception\TokenBlacklistException;
 use thans\jwt\exception\TokenExpiredException;
 use thans\jwt\exception\TokenInvalidException;

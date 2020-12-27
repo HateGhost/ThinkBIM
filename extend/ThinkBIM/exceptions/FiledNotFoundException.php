@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace ghost\exceptions;
+namespace ThinkBIM\exceptions;
 
 
 

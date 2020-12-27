@@ -17,8 +17,10 @@ namespace app\admin\controller;
 
 
 use app\Request;
-use ghost\AdminController;
-use ghost\library\DataTree;
+use ThinkBIM\AdminController;
+use ThinkBIM\library\DataTree;
+use ThinkBIM\MenuService;
+use ThinkBIM\NodeService;
 use think\facade\View;
 
 /**
@@ -74,14 +76,29 @@ class Menu extends AdminController
     /**
      * 添加系统菜单
      * @auth true
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
      */
     public function add()
     {
-        $this->_applyFormToken();
-        $this->_form($this->table, 'form');
+        // $vo = $this->app->db->name('SystemMenu')->where('id', input('id'))->find();
+        // $this->_applyFormToken();
+        // $this->_form($this->table, 'form');
+        $menu = $this->app->db->name($this->table)->order('sort desc,id asc')->column('id,pid,icon,url,node,title,params', 'id');
+        $menus = DataTree::arr2table(array_merge($menu, [['id' => '0', 'pid' => '-1', 'url' => '#', 'title' => '顶部菜单']]));
+        foreach (NodeService::instance()->getMethods() as $node => $item) {
+            if ($item['isauth'] && substr_count($node, '/') >= 2) {
+                $auths[] = ['node' => $node, 'title' => $item['title']];
+            }
+        }
+        // print_r(MenuService::instance()->getList());die;
+        $vo['pid'] = input('pid', '0');
+        $vo['id'] = input('id', '0');
+        View::assign('auths', $auths ?? []);
+        View::assign('menus', $menus);
+        View::assign('nodes', MenuService::instance()->getList());
+        View::assign('vo', $vo);
+        View::assign('id', 2);
+        View::assign('pid', 1);
+        return View::fetch('form');
     }
 
     /**
@@ -93,8 +110,13 @@ class Menu extends AdminController
      */
     public function edit()
     {
-        $this->_applyFormToken();
-        $this->_form($this->table, 'form');
+        // $this->_applyFormToken();
+        // $this->_form($this->table, 'form');
+        View::assign('menus', MenuService::instance()->getList());
+        View::assign('nodes', []);
+        View::assign('vo', ['id' => 1]);
+        return View::fetch('form');
+
     }
 
     /**

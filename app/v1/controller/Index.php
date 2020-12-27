@@ -3,8 +3,8 @@ declare (strict_types = 1);
 
 namespace app\v1\controller;
 
-use ghost\exceptions\FailedException;
-use ghost\GhostResponse;
+use ThinkBIM\exceptions\FailedException;
+use ThinkBIM\GhostResponse;
 use think\facade\View;
 
 class Index

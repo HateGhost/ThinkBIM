@@ -1,7 +1,7 @@
 <?php
 
 
-namespace ghost\library;
+namespace ThinkBIM\library;
 
 
 class DataTree

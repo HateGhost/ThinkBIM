@@ -1,8 +1,8 @@
 <?php
 // 这是系统自动生成的公共文件
 
-use ghost\SystemService;
-use ghost\AdminService;
+use ThinkBIM\SystemService;
+use ThinkBIM\AdminService;
 
 if (!function_exists('sysconf')) {
     /**
@@ -20,6 +20,26 @@ if (!function_exists('sysconf')) {
             return SystemService::instance()->get($name);
         } else {
             return SystemService::instance()->set($name, $value);
+        }
+    }
+}
+
+if (!function_exists('sysdata')) {
+    /**
+     * 获取或配置系统参数
+     * @param string $name 参数名称
+     * @param mixed $value 参数内容
+     * @return mixed
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    function sysdata($name = '', $value = null)
+    {
+        if (is_null($value)) {
+            return SystemService::instance()->getData($name);
+        } else {
+            return SystemService::instance()->setData($name, $value);
         }
     }
 }

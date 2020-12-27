@@ -15,7 +15,7 @@
 
 namespace app\admin\controller\api;
 
-use ghost\AdminController;
+use ThinkBIM\AdminController;
 // use think\admin\Controller;
 // use think\admin\Storage;
 // use think\admin\storage\AliossStorage;
@@ -41,7 +41,7 @@ class Upload extends AdminController
     {
         $data = ['exts' => []];
         foreach (explode(',', sysconf('storage.allow_exts')) as $ext) {
-            $data['exts'][$ext] = Storage::mime($ext);
+            // $data['exts'][$ext] = Storage::mime($ext);
         }
         $template = realpath(__DIR__ . '/../../view/api/upload.js');
         $data['exts'] = json_encode($data['exts'], JSON_UNESCAPED_UNICODE);

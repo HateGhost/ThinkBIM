@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace ghost\exceptions;
+namespace ThinkBIM\exceptions;
 
 
-use ghost\Code;
+use ThinkBIM\Code;
 
 class FailedException extends GhostException
 {

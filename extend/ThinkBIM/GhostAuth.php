@@ -1,7 +1,7 @@
 <?php
 
 
-namespace ghost;
+namespace ThinkBIM;
 
 
 use thans\jwt\facade\JWTAuth;

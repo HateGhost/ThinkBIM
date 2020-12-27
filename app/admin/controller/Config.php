@@ -4,9 +4,9 @@ declare (strict_types = 1);
 namespace app\admin\controller;
 
 use app\Request;
-use ghost\AdminController;
-use ghost\AdminService;
-use ghost\SystemService;
+use ThinkBIM\AdminController;
+use ThinkBIM\AdminService;
+use ThinkBIM\SystemService;
 use think\facade\View;
 
 class Config extends AdminController

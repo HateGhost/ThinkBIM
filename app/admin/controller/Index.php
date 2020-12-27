@@ -3,9 +3,9 @@ declare (strict_types = 1);
 
 namespace app\admin\controller;
 
-use ghost\AdminController;
-use ghost\AdminService;
-use ghost\MenuService;
+use ThinkBIM\AdminController;
+use ThinkBIM\AdminService;
+use ThinkBIM\MenuService;
 use think\facade\View;
 
 class Index extends AdminController

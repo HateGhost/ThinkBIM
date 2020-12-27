@@ -2,7 +2,7 @@
 declare (strict_types=1);
 
 
-namespace ghost;
+namespace ThinkBIM;
 
 use think\App;
 use think\Container;

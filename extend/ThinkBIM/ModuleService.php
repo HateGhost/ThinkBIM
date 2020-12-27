@@ -15,7 +15,7 @@
 
 declare (strict_types=1);
 
-namespace ghost;
+namespace ThinkBIM;
 
 // use think\admin\extend\HttpExtend;
 // use think\admin\extend\Parsedown;

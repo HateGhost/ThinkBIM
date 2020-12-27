@@ -17,7 +17,7 @@ namespace app\admin\controller;
 
 
 
-use ghost\AdminController;
+use ThinkBIM\AdminController;
 
 /**
  * 系统权限管理
@@ -37,9 +37,6 @@ class Auth extends AdminController
      * 系统权限管理
      * @auth true
      * @menu true
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
      */
     public function index()
     {
@@ -51,9 +48,6 @@ class Auth extends AdminController
     /**
      * 添加系统权限
      * @auth true
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
      */
     public function add()
     {
@@ -64,9 +58,6 @@ class Auth extends AdminController
     /**
      * 编辑系统权限
      * @auth true
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
      */
     public function edit()
     {
@@ -77,7 +68,6 @@ class Auth extends AdminController
     /**
      * 修改权限状态
      * @auth true
-     * @throws \think\db\exception\DbException
      */
     public function state()
     {
@@ -91,10 +81,6 @@ class Auth extends AdminController
     /**
      * 权限配置节点
      * @auth true
-     * @throws \ReflectionException
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
      */
     public function apply()
     {
@@ -120,7 +106,6 @@ class Auth extends AdminController
     /**
      * 删除系统权限
      * @auth true
-     * @throws \think\db\exception\DbException
      */
     public function remove()
     {

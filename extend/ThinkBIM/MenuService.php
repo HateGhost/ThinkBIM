@@ -15,10 +15,10 @@
 
 declare (strict_types=1);
 
-namespace ghost;
+namespace ThinkBIM;
 
 
-use ghost\library\DataTree;
+use ThinkBIM\library\DataTree;
 
 /**
  * 系统菜单管理服务

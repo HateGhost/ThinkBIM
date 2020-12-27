@@ -4,10 +4,10 @@ declare (strict_types = 1);
 namespace app\admin\controller;
 
 use app\Request;
-use ghost\AdminController;
-use ghost\AdminService;
-use ghost\CaptchaService;
-use ghost\library\Random;
+use ThinkBIM\AdminController;
+use ThinkBIM\AdminService;
+use ThinkBIM\CaptchaService;
+use ThinkBIM\library\Random;
 use think\facade\View;
 
 class Login extends AdminController

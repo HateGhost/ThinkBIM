@@ -15,9 +15,9 @@
 
 declare (strict_types=1);
 
-namespace ghost;
+namespace ThinkBIM;
 
-use ghost\library\DataTree;
+use ThinkBIM\library\DataTree;
 
 /**
  * 系统权限管理服务
