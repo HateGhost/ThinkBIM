@@ -5,7 +5,7 @@ namespace ThinkBIM\exceptions;
 
 use ThinkBIM\Code;
 
-class PermissionForbiddenException extends GhostException
+class PermissionForbiddenException extends Exception
 {
     protected $code = Code::PERMISSION_FORBIDDEN;
 

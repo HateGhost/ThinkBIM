@@ -6,7 +6,7 @@ namespace ThinkBIM;
 
 use thans\jwt\facade\JWTAuth;
 
-class Auth
+class AuthService extends Service
 {
 
     public function jwt()
@@ -14,5 +14,15 @@ class Auth
         $token = JWTAuth::builder(['uid' => 1]);
         JWTAuth::setToken($token);
         return $token;
+    }
+
+    public function user()
+    {
+        return true;
+    }
+
+    public function isSuperUser()
+    {
+        return true;
     }
 }

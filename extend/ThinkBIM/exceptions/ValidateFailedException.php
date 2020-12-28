@@ -5,7 +5,7 @@ namespace ThinkBIM\exceptions;
 
 use ThinkBIM\Code;
 
-class ValidateFailedException extends GhostException
+class ValidateFailedException extends Exception
 {
     protected $code = Code::VALIDATE_FAILED;
 }

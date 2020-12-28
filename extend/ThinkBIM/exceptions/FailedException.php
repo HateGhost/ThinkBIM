@@ -6,7 +6,7 @@ namespace ThinkBIM\exceptions;
 
 use ThinkBIM\Code;
 
-class FailedException extends GhostException
+class FailedException extends Exception
 {
     protected $code = Code::FAILED;
 }

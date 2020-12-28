@@ -5,7 +5,7 @@ namespace ThinkBIM\exceptions;
 
 
 
-class FiledNotFoundException extends GhostException
+class FiledNotFoundException extends Exception
 {
 
 }

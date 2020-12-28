@@ -5,7 +5,7 @@ namespace ThinkBIM\exceptions;
 
 use ThinkBIM\Code;
 
-class LoginFailedException extends GhostException
+class LoginFailedException extends Exception
 {
     protected $code = Code::LOGIN_FAILED;
 
