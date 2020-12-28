@@ -23,7 +23,7 @@ ThinkBIM 1.0
 ## 安装
 
 ~~~
-git clone https://github.com/HateGhost/ThinkBIM.git
+git clone https://github.com/ThinkBIM/ThinkBIM.git
 composer install
 ~~~
 
@@ -38,3 +38,4 @@ composer install
 [ThinkPHP v6.x](https://www.kancloud.cn/manual/thinkphp6_0/content)
 [ThinkAdmin](https://thinkadmin.top/README)
 [CatchAdmin](https://www.catchadmin.com/docs/)
+

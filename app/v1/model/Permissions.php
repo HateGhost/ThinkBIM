@@ -4,7 +4,12 @@
 namespace app\v1\model;
 
 
-class Permissions
+use think\Model;
+
+class Permissions extends Model
 {
+    protected $name = 'permissions';
+
+
 
 }

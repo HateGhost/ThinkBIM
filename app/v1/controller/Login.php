@@ -3,8 +3,8 @@ declare (strict_types = 1);
 
 namespace app\v1\controller;
 
-use ThinkBIM\GhostAuth;
-use ThinkBIM\GhostResponse;
+use ThinkBIM\Auth;
+use ThinkBIM\Response;
 use thans\jwt\facade\JWTAuth;
 
 class Login
@@ -13,18 +13,17 @@ class Login
     {
         $param = request()->param();
 
-        $auth = new GhostAuth();
+        $auth = new Auth();
         $res = $auth->jwt();
         print_r($res);
         die;
 
-        return GhostResponse::success();
+        return Response::success();
     }
 
     public function logout()
     {
-
-        return GhostResponse::success('', '退出');
+        return Response::success('', '退出');
     }
 
     public function refreshToken()
@@ -36,6 +35,6 @@ class Login
             print_r($e);die;
         }
 
-        return GhostResponse::success(['token' => JWTAuth::refresh()]);
+        return Response::success(['token' => JWTAuth::refresh()]);
     }
 }

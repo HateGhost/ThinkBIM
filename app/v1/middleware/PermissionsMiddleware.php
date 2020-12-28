@@ -1,21 +1,31 @@
 <?php
-namespace catchAdmin\permissions\middleware;
+
+namespace app\v1\middleware;
 
 use app\Request;
-use catchAdmin\permissions\model\Permissions;
-use catcher\CatchCacheKeys;
-use catcher\Code;
-use catcher\exceptions\PermissionForbiddenException;
-use think\facade\Cache;
-use catcher\Utils;
+use app\v1\model\Permissions;
+use think\helper\Str;
+use think\Middleware;
+use ThinkBIM\AuthService;
+use ThinkBIM\CacheKeys;
+use ThinkBIM\Code;
+use ThinkBIM\exceptions\PermissionForbiddenException;
 
-class PermissionsMiddleware
+// use catchAdmin\permissions\model\Permissions;
+// use catcher\CatchCacheKeys;
+// use catcher\Code;
+// use catcher\exceptions\PermissionForbiddenException;
+// use think\facade\Cache;
+// use catcher\Utils;
+
+class PermissionsMiddleware extends Middleware
 {
     /**
-     *
      * @time 2019年12月12日
-     * @param Request $request
+     *
+     * @param Request  $request
      * @param \Closure $next
+     *
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -24,26 +34,27 @@ class PermissionsMiddleware
      */
     public function handle(Request $request, \Closure $next)
     {
-        $rule = $request->rule()->getName();
+        $module = app('http')->getName();
+        $rule   = $request->rule()->getName();
 
         if (!$rule) {
             return $next($request);
         }
 
         // 模块忽略
-        [$module, $controller, $action] = Utils::parseRule($rule);
+        [$controller, $action] = $this->parseRule($rule);
 
-        // toad
-        if (in_array($module, $this->ignoreModule())) {
+
+        if (in_array($module, $this->ignoreController())) {
             return $next($request);
         }
         // 用户未登录
-        $user = $request->user();
+        $user = AuthService::instance()->user();
         if (!$user) {
             throw new PermissionForbiddenException('Login is invalid', Code::LOST_LOGIN);
         }
         // 超级管理员
-        if (Utils::isSuperAdmin()) {
+        if (AuthService::instance()->isSuperUser()) {
             return $next($request);
         }
         // Get 请求
@@ -51,38 +62,38 @@ class PermissionsMiddleware
             return $next($request);
         }
         // 判断权限
-        $permission = property_exists($request, 'permission') ? $request->permission :
-                        $this->getPermission($module, $controller, $action);
+        $permission = property_exists($request, 'permission') ? $request->permission : $this->getPermission($module,
+            $controller, $action);
 
-        if (!$permission || !in_array($permission->id, Cache::get(CatchCacheKeys::USER_PERMISSIONS . $user->id))) {
-          throw new PermissionForbiddenException();
+        if (!$permission || !in_array($permission->id, $this->app->cache->get(CacheKeys::USER_PERMISSIONS.$user->id))) {
+            throw new PermissionForbiddenException();
         }
 
         return $next($request);
     }
 
     /**
-     *
      * @time 2019年12月14日
+     *
      * @param $module
      * @param $controllerName
      * @param $action
      * @param $request
-     * @throws \think\db\exception\DataNotFoundException
+     *
+     * @return array|bool|\think\Model|null
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @return array|bool|\think\Model|null
+     * @throws \think\db\exception\DataNotFoundException
      */
     protected function getPermission($module, $controllerName, $action)
     {
         $permissionMark = sprintf('%s@%s', $controllerName, $action);
 
-        return Permissions::where('module', $module)->where('permission_mark', $permissionMark)->find();
+        return $this->app->db->name('Permissions')->where('module', $module)->where('permission_mark', $permissionMark)->find();
     }
 
     /**
      * 忽略模块
-     *
      * @time 2020年04月16日
      * @return array
      */
@@ -91,12 +102,18 @@ class PermissionsMiddleware
         return ['login'];
     }
 
+    protected function ignoreController()
+    {
+        return ['ligin'];
+    }
+
     /**
      * 操作日志
-     *
      * @time 2020年04月16日
+     *
      * @param $creatorId
      * @param $permission
+     *
      * @return void
      */
     protected function operateEvent($creatorId, $permission)
@@ -110,9 +127,10 @@ class PermissionsMiddleware
 
     /**
      * get allow
-     *
      * @time 2020年10月12日
+     *
      * @param $request
+     *
      * @return bool
      * @throws \ReflectionException
      */
@@ -123,5 +141,20 @@ class PermissionsMiddleware
         }
 
         return $request->isGet() && config('catch.permissions.is_allow_get');
+    }
+
+    public function parseRule($rule)
+    {
+        [$controller, $action] = explode(Str::contains($rule, '@') ? '@' : '/', $rule);
+
+        $controller = explode('\\', $controller);
+
+        $controllerName = lcfirst(array_pop($controller));
+
+        array_pop($controller);
+
+        // $module = array_pop($controller);
+
+        return [$controllerName, $action];
     }
 }

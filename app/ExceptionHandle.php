@@ -3,6 +3,7 @@ namespace app;
 
 use think\db\exception\DataNotFoundException;
 use think\db\exception\ModelNotFoundException;
+use think\Exception;
 use think\exception\Handle;
 use think\exception\HttpException;
 use think\exception\HttpResponseException;
@@ -51,7 +52,9 @@ class ExceptionHandle extends Handle
     public function render($request, Throwable $e): Response
     {
         // 添加自定义异常处理机制
-
+        if($e instanceof \ThinkBIM\exceptions\Exception) {
+            return \ThinkBIM\Response::fail($e->getMessage());
+        }
         // 其他错误交给系统处理
         return parent::render($request, $e);
     }
