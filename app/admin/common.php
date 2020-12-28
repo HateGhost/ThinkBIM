@@ -1,6 +1,7 @@
 <?php
 // 这是系统自动生成的公共文件
 
+use ThinkBIM\FormTokenService;
 use ThinkBIM\SystemService;
 use ThinkBIM\AdminService;
 
@@ -58,6 +59,18 @@ if (!function_exists('sysuri')) {
         return SystemService::instance()->sysuri($url, $vars, $suffix, $domain);
     }
 }
+
+if (!function_exists('systoken')) {
+    /**
+     * 生成 CSRF-TOKEN 参数
+     * @param null|string $node
+     * @return string
+     */
+    function systoken($node = null) {
+        return FormTokenService::instance()->buildToken($node);
+    }
+}
+
 
 if (!function_exists('auth')) {
     /**

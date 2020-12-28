@@ -1,0 +1,141 @@
+<?php
+
+namespace app\admin\controller\wechat;
+
+// use app\wechat\service\WechatService;
+// use think\admin\storage\LocalStorage;
+use think\facade\View;
+use ThinkBIM\AdminController;
+use ThinkBIM\FormTokenService;
+
+/**
+ * 微信授权绑定
+ * Class Config
+ * @package app\admin\controller\wechat
+ */
+class Config extends AdminController
+{
+    /**
+     * 微信授权配置
+     * @auth true
+     * @menu true
+     */
+    public function options()
+    {
+
+        print_r(FormTokenService::instance()->buildToken());die;
+        View::assign('thrNotify', sysuri('wechat/api.push/index', [], false, true));
+        View::assign('geoip', '1111');
+        View::assign('title', '微信授权配置');
+        return View::fetch();
+        // $this->_applyFormToken();
+        $this->thrNotify = sysuri('wechat/api.push/index', [], false, true);
+        if ($this->request->isGet()) {
+            // try {
+            //     $source = enbase64url(sysuri('admin/index/index', [], false, true) . '#' . $this->request->url());
+            //     $this->authurl = "https://open.cuci.cc/service/api.push/auth?source={$source}";
+            //     if (input('?appid') && input('?appkey')) {
+            //         sysconf('wechat.type', 'thr');
+            //         sysconf('wechat.thr_appid', input('appid'));
+            //         sysconf('wechat.thr_appkey', input('appkey'));
+            //         WechatService::ThinkServiceConfig()->setApiNotifyUri($this->thrNotify);
+            //     }
+            //     $this->wechat = WechatService::ThinkServiceConfig()->getConfig();
+            // } catch (\Exception $exception) {
+            //     $this->wechat = [];
+            //     $this->message = $exception->getMessage();
+            // }
+            // $this->geoip = $this->app->cache->get('mygeoip', '');
+            // if (empty($this->geoip)) {
+            //     $this->geoip = gethostbyname($this->request->host());
+            //     $this->app->cache->set('mygeoip', $this->geoip, 360);
+            // }
+            View::assign('title', '微信授权配置');
+            return View::fetch('admin/wechat/config/options');
+        } else {
+            foreach ($this->request->post() as $k => $v) sysconf($k, $v);
+            if ($this->request->post('wechat.type') === 'thr') {
+                try {
+                    WechatService::ThinkServiceConfig()->setApiNotifyUri($this->thrNotify);
+                } catch (\Exception $exception) {
+                    $this->error($exception->getMessage());
+                }
+            }
+            sysoplog('微信管理', '修改微信授权配置成功');
+            $location = url('wechat/config/options')->build() . '?uniqid=' . uniqid();
+            $this->success('微信参数修改成功！', sysuri('admin/index/index') . "#{$location}");
+        }
+    }
+
+    /**
+     * 接口功能测试
+     * @auth true
+     */
+    public function testapi()
+    {
+        return View::fetch();
+    }
+
+    /**
+     * 配置微信支付
+     * @auth true
+     * @menu true
+     * @throws \think\admin\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function payment()
+    {
+        if ($this->request->isGet()) {
+            View::assign('title', '微信支付配置');
+            // $local = LocalStorage::instance();
+            // $this->mch_ssl_cer = sysconf('wechat.mch_ssl_cer');
+            // $this->mch_ssl_key = sysconf('wechat.mch_ssl_key');
+            // $this->mch_ssl_p12 = sysconf('wechat.mch_ssl_p12');
+            // if (!$local->has($this->mch_ssl_cer, true)) $this->mch_ssl_cer = '';
+            // if (!$local->has($this->mch_ssl_key, true)) $this->mch_ssl_key = '';
+            // if (!$local->has($this->mch_ssl_p12, true)) $this->mch_ssl_p12 = '';
+            // $this->fetch();
+            return View::fetch();
+        } else {
+            $this->error('抱歉，数据提交地址错误！');
+        }
+    }
+
+    /**
+     * 修改微信支付
+     * @auth true
+     * @throws \think\admin\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function paymentsave()
+    {
+        if ($this->request->isPost()) {
+            if ($this->request->post('wechat.mch_ssl_type') === 'p12') {
+                if (!LocalStorage::instance()->has(input('wechat.mch_ssl_p12', '-'), true)) {
+                    $this->error('商户证书 P12 证书不能为空！');
+                }
+                $content = LocalStorage::instance()->get(input('wechat.mch_ssl_p12', '-'), true);
+                if (!openssl_pkcs12_read($content, $certs, input('wechat.mch_id'))) {
+                    $this->error('商户账号与 P12 证书不匹配！');
+                }
+            } elseif ($this->request->post('wechat.mch_ssl_type') === 'pem') {
+                if (!LocalStorage::instance()->has(input('wechat.mch_ssl_key', '-'), true)) {
+                    $this->error('商户证书 KEY 不能为空！');
+                }
+                if (!LocalStorage::instance()->has(input('wechat.mch_ssl_cer', '-'), true)) {
+                    $this->error('商户证书 CERT 不能为空！');
+                }
+            }
+            foreach ($this->request->post() as $k => $v) sysconf($k, $v);
+            sysoplog('微信管理', '修改微信支付配置成功');
+            $this->success('微信支付配置成功！');
+        } else {
+            $this->error('抱歉，访问方式错误！');
+        }
+    }
+
+}

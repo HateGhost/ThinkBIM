@@ -3,8 +3,11 @@ declare (strict_types = 1);
 
 namespace app\admin\controller;
 
+use think\facade\Request;
+use think\middleware\FormTokenCheck;
 use ThinkBIM\AdminController;
 use ThinkBIM\AdminService;
+use ThinkBIM\FormTokenService;
 use ThinkBIM\MenuService;
 use think\facade\View;
 
@@ -12,6 +15,11 @@ class Index extends AdminController
 {
     public function index()
     {
+
+        // print_r(FormTokenService::instance()->buildToken());die;
+        //
+        // $res = Request::checkToken('__token__');
+        // var_dump($res);die;
         if(!AdminService::instance()->isLogin()) {
             return redirect(sysuri('admin/login/index'));
         }

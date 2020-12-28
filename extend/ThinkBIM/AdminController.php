@@ -6,10 +6,17 @@ namespace ThinkBIM;
 
 use app\BaseController;
 use think\exception\HttpResponseException;
-use think\middleware\FormTokenCheck;
 
 class AdminController extends BaseController
 {
+    public function initialize()
+    {
+        if(!AdminService::instance()->isLogin()) {
+            // return redirect(sysuri('admin/login/index'));
+            return redirect('https://www.baidu.com');
+        }
+    }
+
     public function _form()
     {
 

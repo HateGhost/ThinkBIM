@@ -290,6 +290,7 @@ $(function () {
             node = node || location.href.replace(/.*spm=([\d\-m]+).*/ig, '$1');
             if (!/^m-/.test(node)) {
                 var $menu = $('[data-menu-node][data-open*="' + url.replace(/\.html$/ig, '') + '"]');
+                console.log($menu);
                 return $menu.size() ? $menu.get(0).dataset.menuNode : '';
             }
             return node;
