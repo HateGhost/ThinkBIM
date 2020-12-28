@@ -6,7 +6,7 @@ namespace ThinkBIM;
 
 use thans\jwt\facade\JWTAuth;
 
-class GhostAuth
+class Auth
 {
 
     public function jwt()

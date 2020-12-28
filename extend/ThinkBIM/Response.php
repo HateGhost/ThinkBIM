@@ -6,7 +6,7 @@ namespace ThinkBIM;
 use think\Paginator;
 use think\response\Json;
 
-class GhostResponse
+class Response
 {
   /**
    * 成功的响应

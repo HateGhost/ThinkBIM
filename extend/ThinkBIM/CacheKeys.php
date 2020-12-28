@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ThinkBIM;
 
-class GhostCacheKeys
+class CacheKeys
 {
     public const USER_PERMISSIONS = 'user_permissions_';
 
