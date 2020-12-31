@@ -1,24 +1,21 @@
 <?php
 declare (strict_types = 1);
 
-namespace app\index\controller;
+namespace app\blog\controller;
 
 use think\facade\View;
 
-class Article
+class Index
 {
     public function index()
     {
+        View::assign('title', 'ThinkBIM');
         return View::fetch();
     }
 
     public function read()
     {
-        return View::fetch();
-    }
-
-    public function diary()
-    {
+        View::assign('title', 'ThinkBIM');
         return View::fetch();
     }
 }

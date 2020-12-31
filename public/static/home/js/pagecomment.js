@@ -7,15 +7,15 @@
     //评论和留言的编辑器的验证
     form.verify({
         content: function (value) {
-            value = $.trim(layedit.getContent(editIndex));
+            value = $.trim(layedit.getContent('editIndex'));
             if (value == "") return "请输入内容";
-            layedit.sync(editIndex);
+            layedit.sync('editIndex');
         },
         replyContent: function (value) {
             if (value == "") return "请输入内容";
         }
     });
-     
+
     //回复按钮点击事件
     $('#blog-comment').on('click', '.btn-reply', function () {
         var targetId = $(this).data('targetid')
@@ -34,4 +34,3 @@
         }
     });
 });
- 
