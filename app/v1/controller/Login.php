@@ -3,7 +3,7 @@ declare (strict_types = 1);
 
 namespace app\v1\controller;
 
-use ThinkBIM\Auth;
+use ThinkBIM\AuthService;
 use ThinkBIM\Response;
 use thans\jwt\facade\JWTAuth;
 
@@ -13,7 +13,7 @@ class Login
     {
         $param = request()->param();
 
-        $auth = new Auth();
+        $auth = new AuthService();
         $res = $auth->jwt();
         print_r($res);
         die;

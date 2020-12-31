@@ -178,7 +178,6 @@ class Menu extends AdminController
     /**
      * 修改菜单状态
      * @auth true
-     * @throws \think\db\exception\DbException
      */
     public function state(Request $request)
     {
@@ -193,12 +192,11 @@ class Menu extends AdminController
     /**
      * 删除系统菜单
      * @auth true
-     * @throws \think\db\exception\DbException
      */
     public function remove()
     {
-        $this->_applyFormToken();
-        $this->_delete($this->table);
+        $this->app->db->name($this->table)->whereIn('id', input('id'))->delete();
+        $this->success('删除成功');
     }
 
 

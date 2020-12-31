@@ -5,10 +5,10 @@ namespace app\index\controller;
 
 use think\facade\View;
 
-class Index
+class Link
 {
     public function index()
     {
-        return View::fetch();
+        return View::fetch('index/link');
     }
 }
