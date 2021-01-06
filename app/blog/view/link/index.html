@@ -38,10 +38,10 @@
                 </p>
                 <p>
                     交换友链可在留言板留言.请将本站加入友链<br>
-                    名称：燕十三<br>
-                    网址：https://www.yanshisan.cn<br>
-                    图标：https://www.yanshisan.cn/logo.png<br>
-                    描述：燕十三·一个人的江湖
+                    名称：ThinkBIM<br>
+                    网址：http://www.thinkbim.cn<br>
+                    图标：http://www.thinkbim.cn/logo.png<br>
+                    描述：ThinkBIM
                 </p>
                 <p>
                     申请提交后若无其它原因将在24小时内审核,如超过时间还未通过,请私信我.(各种额外因素)
@@ -49,42 +49,17 @@
             </section>
         </article>
         <ul class="link-list">
+            {volist name="list" id="vo"}
             <li>
                 <div class="pd-lr-10">
-                    <a href="https://www.yanshisan.cn" target="_blank">
-                        <img src="https://www.yanshisan.cn/logo.png">
-                        <h3>燕十三</h3>
-                        <p>燕十三·一个人的江湖</p>
+                    <a href="{$vo.url}" target="_blank">
+                        <img src="{$vo.logo}">
+                        <h3>{$vo.name}</h3>
+                        <p>{$vo.name}</p>
                     </a>
                 </div>
             </li>
-            <li>
-                <div class="pd-lr-10">
-                    <a href="https://www.yanshisan.cn" target="_blank">
-                        <img src="https://www.yanshisan.cn/logo.png">
-                        <h3>燕十三</h3>
-                        <p>燕十三·一个人的江湖</p>
-                    </a>
-                </div>
-            </li>
-            <li>
-                <div class="pd-lr-10">
-                    <a href="https://www.yanshisan.cn" target="_blank">
-                        <img src="https://www.yanshisan.cn/logo.png">
-                        <h3>燕十三</h3>
-                        <p>燕十三·一个人的江湖</p>
-                    </a>
-                </div>
-            </li>
-            <li>
-                <div class="pd-lr-10">
-                    <a href="https://www.yanshisan.cn" target="_blank">
-                        <img src="https://www.yanshisan.cn/logo.png">
-                        <h3>燕十三</h3>
-                        <p>燕十三·一个人的江湖</p>
-                    </a>
-                </div>
-            </li>
+            {/volist}
         </ul>
     </div>
 </div>

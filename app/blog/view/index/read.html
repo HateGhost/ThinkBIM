@@ -1,7 +1,7 @@
 {extend name="index" /}
 
 {block name="style"}
-<link rel="stylesheet" href="__ROOT__/css/blog.css" />
+<link rel="stylesheet" href="__ROOT__/css/blog.css"/>
 {/block}
 
 {block name="content"}
@@ -9,7 +9,7 @@
     <div class="col-content" style="width:100%">
         <div class="inner">
             <article class="article-list">
-                <input type="hidden" value="@Model.BlogTypeID" id="blogtypeid" />
+                <input type="hidden" value="@Model.BlogTypeID" id="blogtypeid"/>
                 <section class="article-item">
                     <aside class="title" style="line-height:1.5;">
                         <h4>使用码云和VS托管本地代码</h4>
@@ -26,7 +26,7 @@
                         <span class="month fs-18">5<small class="fs-14">月</small></span>
                         <span class="year fs-18">2018</span>
                     </div>
-                    <div class="content artiledetail" style="border-bottom: 1px solid #e1e2e0; padding-bottom: 20px;">
+                    <div class="content artiledetail" style="padding-bottom: 20px;">
                         内容自定义
                         <div class="copyright mt20">
                             <p class="f-toe fc-black">
@@ -45,18 +45,10 @@
                         <h6>延伸阅读</h6>
                         <ol class="b-relation"></ol>
                     </div>
-                    <div class="bdsharebuttonbox share" data-tag="share_1">
-                        <ul>
-                            <li class="f-praise"><span><a class="s-praise"></a></span></li>
-                            <li class="f-weinxi"><a class="s-weinxi" data-cmd="weixin"></a></li>
-                            <li class="f-sina"><a class="s-sina" data-cmd="tsina"></a></li>
-                            <li class="f-qq" href="#"><i class="fa fa-qq"></i></li>
-                            <li class="f-qzone"><a class="s-qzone" data-cmd="qzone"></a></li>
-                        </ul>
-                    </div>
-                    <div class="f-cb"></div>
-                    <div class="mt20 f-fwn fs-24 fc-grey comment" style="border-top: 1px solid #e1e2e0; padding-top: 20px;">
-                    </div>
+<!--                    <div class="f-cb"></div>-->
+<!--                    <div class="mt20 f-fwn fs-24 fc-grey comment"-->
+<!--                         style="border-top: 1px solid #e1e2e0; padding-top: 20px;">-->
+<!--                    </div>-->
                     <fieldset class="layui-elem-field layui-field-title">
                         <legend>发表评论</legend>
                         <div class="layui-field-box">
@@ -64,10 +56,13 @@
                                 <form class="layui-form blog-editor" action="">
                                     <input type="hidden" name="articleid" id="articleid" value="@Model.ID">
                                     <div class="layui-form-item">
-                                        <textarea name="editorContent" lay-verify="content" id="remarkEditor" placeholder="请输入内容" class="layui-textarea"></textarea>
+                                        <textarea name="editorContent" lay-verify="content" id="remarkEditor"
+                                                  placeholder="请输入内容" class="layui-textarea"></textarea>
                                     </div>
                                     <div class="layui-form-item">
-                                        <button class="layui-btn" lay-submit="formLeaveMessage" lay-filter="formLeaveMessage">提交留言</button>
+                                        <button class="layui-btn" lay-submit="formLeaveMessage"
+                                                lay-filter="formLeaveMessage">提交留言
+                                        </button>
                                     </div>
                                 </form>
                             </div>

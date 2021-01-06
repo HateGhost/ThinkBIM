@@ -10,6 +10,7 @@ class Message
     public function index()
     {
         View::assign('title', 'ThinkBIM - 留言');
+        View::assign('list', [1]);
         return View::fetch();
     }
 }
