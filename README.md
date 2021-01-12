@@ -28,9 +28,9 @@ composer install
 ~~~
 
 ## 登录
-* 前端 www.thinkbim.cn/index
-* 接口 www.thinkbim.cn/v1
-* 后端 www.thinkbim.cn/admin
+* [前端示例](https://www.thinkbim.cn)
+* [接口示例](https://www.thinkbim.cn/v1)
+* [后端示例](https://www.thinkbim.cn/admin)
 
 
 ## 感谢
