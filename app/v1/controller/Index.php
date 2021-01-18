@@ -18,9 +18,14 @@ class Index
         return Response::fail('xxxxxxxxxxxxxxxxxxxxxxxx');
     }
 
-    public function cc()
+    public function success()
     {
         // echo memory_get_usage().PHP_EOL;
-        return Response::success('xxxxx');
+        return Response::success(['nickname' => 'ThinkBIM'], '请求成功');
+    }
+
+    public function error()
+    {
+        return Response::fail('这是个错误消息');
     }
 }

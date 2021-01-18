@@ -29,7 +29,7 @@ composer install
 
 ## 登录
 * [前端示例](https://www.thinkbim.cn)
-* [接口示例](https://www.thinkbim.cn/v1)
+* [接口示例](https://www.thinkbim.cn/v1/info)
 * [后端示例](https://www.thinkbim.cn/admin)
 
 

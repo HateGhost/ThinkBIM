@@ -8,8 +8,8 @@ Route::post('refresh/token', 'login/refreshToken');
 
 
 Route::group(function () {
-    Route::get('cc', 'app\v1\controller\Index@index');
-    Route::get('ccw', 'app\v1\controller\api\Index@index');
+    Route::get('info/success', 'app\v1\controller\Index@success');
+    Route::get('info/error', 'app\v1\controller\Index@error');
 })->middleware([
     // app\v1\middleware\AuthTokenMiddleware::class,
     app\v1\middleware\PermissionsMiddleware::class
