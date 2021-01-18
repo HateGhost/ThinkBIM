@@ -63,6 +63,11 @@ docker run --name nginx -p 80:80 -p 443:443 \
 
 ## 安装PHP扩展
 
+>进入PHP容器
+~~~
+docker exec -it php7.4.14 /bin/bash
+~~~
+
 > 安装依赖
 
 ~~~
