@@ -4,6 +4,7 @@ namespace app\admin\controller\wechat;
 
 // use app\wechat\service\WechatService;
 // use think\admin\storage\LocalStorage;
+use app\admin\service\WechatService;
 use think\facade\View;
 use ThinkBIM\AdminController;
 use ThinkBIM\FormTokenService;
@@ -22,12 +23,6 @@ class Config extends AdminController
      */
     public function options()
     {
-
-        print_r(FormTokenService::instance()->buildToken());die;
-        View::assign('thrNotify', sysuri('wechat/api.push/index', [], false, true));
-        View::assign('geoip', '1111');
-        View::assign('title', '微信授权配置');
-        return View::fetch();
         // $this->_applyFormToken();
         $this->thrNotify = sysuri('wechat/api.push/index', [], false, true);
         if ($this->request->isGet()) {
@@ -50,8 +45,12 @@ class Config extends AdminController
             //     $this->geoip = gethostbyname($this->request->host());
             //     $this->app->cache->set('mygeoip', $this->geoip, 360);
             // }
+            View::assign('thrNotify', sysuri('admin/wechat.api.push/index', [], false, true));
+            View::assign('geoip', '1111');
             View::assign('title', '微信授权配置');
-            return View::fetch('admin/wechat/config/options');
+            return View::fetch();
+            // View::assign('title', '微信授权配置');
+            // return View::fetch('admin/wechat/config/options');
         } else {
             foreach ($this->request->post() as $k => $v) sysconf($k, $v);
             if ($this->request->post('wechat.type') === 'thr') {
@@ -61,7 +60,7 @@ class Config extends AdminController
                     $this->error($exception->getMessage());
                 }
             }
-            sysoplog('微信管理', '修改微信授权配置成功');
+            // sysoplog('微信管理', '修改微信授权配置成功');
             $location = url('wechat/config/options')->build() . '?uniqid=' . uniqid();
             $this->success('微信参数修改成功！', sysuri('admin/index/index') . "#{$location}");
         }

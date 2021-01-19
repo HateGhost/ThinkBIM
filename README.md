@@ -163,7 +163,7 @@ docker-php-ext-enable swoole
 
 > 常用扩展
 ~~~
-docker-php-ext-install gd pdo_mysql mysqli
+docker-php-ext-install gd pdo_mysql mysqli bcmath
 ~~~
 
 > 检查安装
