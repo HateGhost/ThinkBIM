@@ -131,8 +131,7 @@ docker exec -it php7.4.14 /bin/bash
 
 ~~~
 apt-get update
-apt-get install -y --no-install-recommends libmemcached-dev zlib1g-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev
-apt-get install zip unzi git
+apt-get install -y --no-install-recommends libmemcached-dev zlib1g-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev zip unzip git
 ~~~
 
 >下载安装
@@ -144,15 +143,15 @@ mv phpredis-5.3.2/ /usr/src/php/ext/
 docker-php-ext-install phredis-5.3.2
 ##memcached
 curl -L -o /tmp/memcached.tar.gz https://github.com/php-memcached-dev/php-memcached/archive/v3.1.5.tar.gz
-tar -zxf ...
-mv ..  /usr/src/php/ext
+tar -zxf memcached.tar.gz
+mv php-memcached-3.1.5/ /usr/src/php/ext/
 docker-php-ext-install php-memcached-5.3.2
 
 ~~~
 
 > 创建   /usr/src/php/ext 目录
 ~~~
-docker-php-source extracth
+docker-php-source extract
 ~~~
 
 
@@ -171,6 +170,49 @@ docker-php-ext-install gd pdo_mysql mysqli
 
 ~~~
 php -m
+
+[PHP Modules]
+Core
+ctype
+curl
+date
+dom
+fileinfo
+filter
+ftp
+gd
+hash
+iconv
+json
+libxml
+mbstring
+memcached
+mysqli
+mysqlnd
+openssl
+pcre
+PDO
+pdo_mysql
+pdo_sqlite
+Phar
+posix
+readline
+redis
+Reflection
+session
+SimpleXML
+sodium
+SPL
+sqlite3
+standard
+swoole
+tokenizer
+xml
+xmlreader
+xmlwriter
+zlib
+
+[Zend Modules]
 ~~~
 
 
