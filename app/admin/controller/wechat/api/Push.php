@@ -13,12 +13,10 @@
 // | github 代码仓库：https://github.com/zoujingli/ThinkAdmin
 // +----------------------------------------------------------------------
 
-namespace app\wechat\controller\api;
+namespace app\admin\controller\wechat\api;
 
-use app\wechat\service\FansService;
-use app\wechat\service\MediaService;
-use app\wechat\service\WechatService;
-use think\admin\Controller;
+
+use app\admin\service\WechatService;
 use ThinkBIM\AdminController;
 
 /**
