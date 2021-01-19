@@ -27,48 +27,107 @@ ThinkBIM 1.0
 docker pull redis
 docker pull mysql
 docker pull nginx
-docker pull memcached:latest
+docker pull memcached
 docker pull php:7.4.14-fpm
 ~~~
 
->运行镜像 memcached redis mysql php nginx
-
+>创建volume
+~~~
+## redis
+mkdir -p /home/redis/data
+## mysql
+mkdir -p /home/mysql/data
+## nginx项目目录
+mkdir -p /home/nginx/www
+## nginx配置
+mkdir -p /home/nginx/conf
+## nginx证书
+mkdir -p /home/nginx/cert 
 ~~~
 
+>运行镜像 memcached redis mysql php nginx
+~~~
 docker run --name memcached -p 11211:11211 -itd memcached:latest
 
 docker run --name redis -p 6379:6379 \
--v /root/docker/redis/data:/data \
+-v /home/redis/data:/data \
 -itd redis:latest \
 redis-server --appendonly yes 
 
 docker run --name mysql -p 3306:3306  \
--v /root/docker/mysql/data/:/var/lib/mysql \
+-v /home/mysql/data/:/var/lib/mysql \
 -e MYSQL_ROOT_PASSWORD=12345678 \ 
 -itd mysql
 
-docker run --name php8.0.1 -p 9000:9000 \
--v /root/docker/nginx/HateGhost:/usr/share/nginx/HateGhost \
--v /root/docker/nginx/ThinkBIM:/usr/share/nginx/ThinkBIM \
--itd php:8.0.1-fpm
+docker run --name php7.4 -p 9000:9000 \
+-v /home/nginx/www/ThinkBIM:/usr/share/nginx/ThinkBIM \
+-itd php:7.4.14-fpm
 
 docker run --name nginx -p 80:80 -p 443:443 \
--v /root/docker/nginx/cert/:/etc/nginx/cert/ \
--v /root/docker/nginx/conf/conf.d/thinkbim.conf:/etc/nginx/conf.d/thinkbim.conf \
--v /root/docker/nginx/conf/conf.d/hateghost.conf:/etc/nginx/conf.d/hateghost.conf \
--v /root/docker/nginx/ThinkBIM:/usr/share/nginx/ThinkBIM \
--v /root/docker/nginx/HateGhost:/usr/share/nginx/HateGhost \
+-v /home/nginx/cert/:/etc/nginx/cert/ \
+-v /home/nginx/conf/nginx.conf:/etc/nginx/conf.d/thinkbim.conf \
+-v /home/nginx/www/ThinkBIM:/usr/share/nginx/ThinkBIM \
  -itd nginx
 ~~~
 
-## 安装PHP扩展
+## nginx.conf
+~~~
+vim nginx.conf
 
+## 查看php容器IP
+docker inspect php7.4
+
+server {
+    listen 80;
+    listen 443 ssl;
+    ssl_certificate ./cert/www.thinkbim.cn.pem;
+    ssl_certificate_key ./cert/www.thinkbim.cn.key;
+    root /usr/share/nginx/ThinkBIM/public;
+    server_name www.thinkbim.cn thinkbim.cn;
+    index  index.html index.htm index.php;
+ 
+    location / {
+        try_files $uri @rewrite;
+    }
+    location @rewrite {
+        set $static 0;
+        if  ($uri ~ \.(css|js|jpg|jpeg|png|gif|ico|woff|eot|svg|css\.map|min\.map)$) {
+            set $static 1;
+        }
+        if ($static = 0) {
+            rewrite ^/(.*)$ /index.php?s=/$1;
+        }
+    }
+    location ~ /Uploads/.*\.php$ {
+        deny all;
+    }
+    location ~ \.php/ {
+       if ($request_uri ~ ^(.+\.php)(/.+?)($|\?)) { }
+       fastcgi_pass 172.18.0.6:9000;
+       include fastcgi_params;
+       fastcgi_param SCRIPT_NAME     $1;
+       fastcgi_param PATH_INFO       $2;
+       fastcgi_param SCRIPT_FILENAME $document_root$1;
+    }
+    location ~ \.php$ {
+        fastcgi_pass 172.18.0.6:9000;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+    location ~ /\.ht {
+        deny  all;
+    }
+}
+
+~~~
+
+## Docker安装[PHP扩展](https://thoughts.teambition.com/share/600640539cda7c004615be32#title=PHP扩展)
 >进入PHP容器
 ~~~
 docker exec -it php7.4.14 /bin/bash
 ~~~
 
-> 安装依赖
+>安装依赖
 
 ~~~
 apt-get update
@@ -76,11 +135,19 @@ apt-get install -y --no-install-recommends libmemcached-dev zlib1g-dev libfreety
 apt-get install zip unzi git
 ~~~
 
-> redis下载安装
-
+>下载安装
 ~~~
+##redis
 curl -L -o /tmp/redis.tar.gz https://github.com/phpredis/phpredis/archive/5.3.2.tar.gz
 tar -zxf redis.tar.gz
+mv phpredis-5.3.2/ /usr/src/php/ext/
+docker-php-ext-install phredis-5.3.2
+##memcached
+curl -L -o /tmp/memcached.tar.gz https://github.com/php-memcached-dev/php-memcached/archive/v3.1.5.tar.gz
+tar -zxf ...
+mv ..  /usr/src/php/ext
+docker-php-ext-install php-memcached-5.3.2
+
 ~~~
 
 > 创建   /usr/src/php/ext 目录
@@ -88,31 +155,14 @@ tar -zxf redis.tar.gz
 docker-php-source extracth
 ~~~
 
-> 使用docker-php-ext-install安装扩展
-~~~
-mv phpredis-5.3.2/ /usr/src/php/ext/
-docker-php-ext-install phredis-5.3.2
-~~~
-
-> memcached下载安装
-
-~~~
-curl -L -o /tmp/memcached.tar.gz https://github.com/php-memcached-dev/php-memcached/archive/v3.1.5.tar.gz
-tar -zxf ...
-mv ..  /usr/src/php/ext
-docker-php-ext-install php-memcached-5.3.2
-~~~
-
 
 > pecl 安装扩展
-
 ~~~
 pecl install swoole
 docker-php-ext-enable swoole
 ~~~
 
 > 常用扩展
-
 ~~~
 docker-php-ext-install gd pdo_mysql mysqli
 ~~~
