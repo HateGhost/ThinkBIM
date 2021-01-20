@@ -111,7 +111,7 @@ class Push extends AdminController
                 $this->encrypt = $this->wechat->isEncrypt();
                 $this->receive = $this->_arrayChangeKeyCase($this->wechat->getReceive());
             }
-         
+
             $this->fromOpenid = $this->receive['tousername'];
             // 消息类型：text, event, image, voice, shortvideo, location, link
             if (method_exists($this, ($method = $this->receive['msgtype']))) {

@@ -24,7 +24,6 @@ class Config extends AdminController
     public function options()
     {
         // $this->_applyFormToken();
-        $this->thrNotify = sysuri('wechat/api.push/index', [], false, true);
         if ($this->request->isGet()) {
             // try {
             //     $source = enbase64url(sysuri('admin/index/index', [], false, true) . '#' . $this->request->url());
@@ -40,13 +39,13 @@ class Config extends AdminController
             //     $this->wechat = [];
             //     $this->message = $exception->getMessage();
             // }
-            // $this->geoip = $this->app->cache->get('mygeoip', '');
-            // if (empty($this->geoip)) {
-            //     $this->geoip = gethostbyname($this->request->host());
-            //     $this->app->cache->set('mygeoip', $this->geoip, 360);
-            // }
+            $geoip = $this->app->cache->get('mygeoip', '');
+            if (empty($geoip)) {
+                $geoip = gethostbyname($this->request->host());
+                $this->app->cache->set('mygeoip', $geoip, 360);
+            }
             View::assign('thrNotify', sysuri('admin/wechat.api.push/index', [], false, true));
-            View::assign('geoip', '1111');
+            View::assign('geoip', $geoip);
             View::assign('title', '微信授权配置');
             return View::fetch();
             // View::assign('title', '微信授权配置');
