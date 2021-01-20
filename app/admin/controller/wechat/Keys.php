@@ -15,8 +15,9 @@
 
 namespace app\admin\controller\wechat;
 
-// use app\wechat\service\WechatService;
+use app\admin\service\WechatService;
 use think\exception\HttpResponseException;
+use think\facade\Db;
 use think\facade\View;
 use ThinkBIM\AdminController;
 
@@ -46,30 +47,30 @@ class Keys extends AdminController
      * 回复规则管理
      * @auth true
      * @menu true
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
      */
     public function index()
     {
+        // 关键字二维码生成
+        // if ($this->request->get('action') === 'qrc') try {
+        //     $wechat = WechatService::WeChatQrcode();
+        //     $result = $wechat->create($this->request->get('keys', ''));
+        //     $this->success('生成二维码成功！', "javascript:$.previewImage('{$wechat->url($result['ticket'])}')");
+        // } catch (HttpResponseException $exception) {
+        //     throw $exception;
+        // } catch (\Exception $exception) {
+        //     $this->error("生成二维码失败，请稍候再试！<br> {$exception->getMessage()}");
+        // }
+        // 数据列表分页处理
+        // $this->title = '回复规则管理';
+        $list = Db::name($this->table)->page(1)->select();
+            // ->whereNotIn('keys', ['subscribe', 'default']);
+        // $query->equal('status')->like('keys,type');
+        // $list = $query->whereBetweenTime('create_at', '', '')->order('sort desc,id desc')->page(1);
+        // var_dump($query->getLastSql());die;
         View::assign('title', '回复规则管理');
-        View::assign('list', []);
+        View::assign('list', $list);
         View::assign('types', []);
         return View::fetch();
-        // 关键字二维码生成
-        if ($this->request->get('action') === 'qrc') try {
-            $wechat = WechatService::WeChatQrcode();
-            $result = $wechat->create($this->request->get('keys', ''));
-            $this->success('生成二维码成功！', "javascript:$.previewImage('{$wechat->url($result['ticket'])}')");
-        } catch (HttpResponseException $exception) {
-            throw $exception;
-        } catch (\Exception $exception) {
-            $this->error("生成二维码失败，请稍候再试！<br> {$exception->getMessage()}");
-        }
-        // 数据列表分页处理
-        $this->title = '回复规则管理';
-        $query = $this->_query($this->table)->whereNotIn('keys', ['subscribe', 'default']);
-        $query->equal('status')->like('keys,type')->dateBetween('create_at')->order('sort desc,id desc')->page();
     }
 
     /**
@@ -87,23 +88,18 @@ class Keys extends AdminController
     /**
      * 添加回复规则
      * @auth true
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
      */
     public function add()
     {
-        $this->_applyFormToken();
-        $this->title = '添加回复规则';
-        $this->_form($this->table, 'form');
+        View::assign('title', '添加回复规则');
+        View::assign('types', $this->types);
+        View::assign('defaultImage', '');
+        return View::fetch('form');
     }
 
     /**
      * 编辑回复规则
      * @auth true
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
      */
     public function edit()
     {
@@ -115,7 +111,6 @@ class Keys extends AdminController
     /**
      * 修改回复规则状态
      * @auth true
-     * @throws \think\db\exception\DbException
      */
     public function state()
     {
@@ -129,7 +124,6 @@ class Keys extends AdminController
     /**
      * 删除回复规则
      * @auth true
-     * @throws \think\db\exception\DbException
      */
     public function remove()
     {
@@ -141,33 +135,33 @@ class Keys extends AdminController
      * 配置关注回复
      * @auth true
      * @menu true
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
      */
     public function subscribe()
     {
         // $this->_applyFormToken();
+        if($this->request->post()) {
+
+            $this->app->db->name($this->table)->insert($this->request->post());
+            $this->success('内容保存成功', '');
+        }
         View::assign('title', '编辑关注回复规则');
-        View::assign('types', []);
+        View::assign('types', $this->types);
         View::assign('keys', 'subscribe');
+        View::assign('defaultImage', '');
         return View::fetch('form');
-        // $this->title = '编辑关注回复规则';
-        // $this->_form($this->table, 'form', 'keys', [], ['keys' => 'subscribe']);
     }
 
     /**
      * 配置默认回复
      * @auth true
      * @menu true
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
      */
     public function defaults()
     {
         View::assign('title', '编辑默认回复规则');
         View::assign('keys', 'default');
+        View::assign('defaultImage', '');
+        View::assign('types', $this->types);
         return View::fetch('form');
         // $this->_applyFormToken();
         // $this->title = '编辑默认回复规则';

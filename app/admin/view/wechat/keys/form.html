@@ -191,10 +191,11 @@
 
         /*! 刷新预览显示 */
         function showReview(params, location) {
+            console.log(params);
             if (params['type'] === 'news') {
-                location = '{:url("@wechat/api.view/news")}?id=_id_'.replace('_id_', params.content);
+                location = '{:url("@admin/wechat.api.view/news")}?id=_id_'.replace('_id_', params.content);
             } else {
-                location = '{:url("@wechat/api.view/_type_")}?'.replace('_type_', params.type) + $.param(params || {});
+                location = '{:url("@admin/wechat.api.view/_type_")}?'.replace('_type_', params.type) + $.param(params || {});
             }
             var iframe = '<iframe id="phone-preview" frameborder="0" marginheight="0" marginwidth="0"></iframe>';
             $('[data-iframe-box]').empty().append($(iframe).attr('src', location));

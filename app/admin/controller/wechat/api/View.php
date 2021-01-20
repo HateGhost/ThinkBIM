@@ -13,17 +13,18 @@
 // | github 代码仓库：https://github.com/zoujingli/ThinkAdmin
 // +----------------------------------------------------------------------
 
-namespace app\wechat\controller\api;
+namespace app\admin\controller\wechat\api;
 
-use app\wechat\service\MediaService;
-use think\admin\Controller;
+use app\admin\service\MediaService;
+use ThinkBIM\AdminController;
+
 
 /**
  * 微信图文显示
  * Class View
  * @package app\wechat\controller\api
  */
-class View extends Controller
+class View extends AdminController
 {
 
     /**
@@ -35,9 +36,10 @@ class View extends Controller
      */
     public function news($id = 0)
     {
+        echo 1;die;
         $this->id = $id ?: input('id', 0);
         $this->news = MediaService::instance()->news($this->id);
-        $this->fetch();
+        \think\facade\View::fetch();
     }
 
     /**
@@ -62,8 +64,8 @@ class View extends Controller
      */
     public function text()
     {
-        $this->content = strip_tags(input('content', ''), '<a><img>');
-        $this->fetch();
+        \think\facade\View::assign('content', strip_tags(input('content', ''), '<a><img>'));
+        return \think\facade\View::fetch();
     }
 
     /**
