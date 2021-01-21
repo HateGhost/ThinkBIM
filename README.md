@@ -230,12 +230,13 @@ composer install
 
 ## 登录
 * [前端示例](https://www.thinkbim.cn)
+* [博客](https://www.thinkbim.cn/blog)
 * [接口成功示例](https://www.thinkbim.cn/v1/info/success)
 * [接口失败示例](https://www.thinkbim.cn/v1/info/error)
 * [后端入口](https://www.thinkbim.cn/admin)
 
 
-## 感谢
+## 感谢第三方
 
 [ThinkPHP v6.x](https://www.kancloud.cn/manual/thinkphp6_0/content)
 [ThinkAdmin](https://thinkadmin.top/README)
