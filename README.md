@@ -172,6 +172,7 @@ docker-php-ext-install gd pdo_mysql mysqli bcmath
 php -m
 
 [PHP Modules]
+bcmath
 Core
 ctype
 curl
@@ -228,7 +229,7 @@ git clone https://github.com/ThinkBIM/ThinkBIM.git
 composer install
 ~~~
 
-## 登录
+## 访问入口
 * [前端示例](https://www.thinkbim.cn)
 * [博客](https://www.thinkbim.cn/blog)
 * [接口成功示例](https://www.thinkbim.cn/v1/info/success)
@@ -238,7 +239,7 @@ composer install
 
 ## 感谢第三方
 
-[ThinkPHP v6.x](https://www.kancloud.cn/manual/thinkphp6_0/content)
-[ThinkAdmin](https://thinkadmin.top/README)
-[CatchAdmin](https://www.catchadmin.com/docs/)
+* [ThinkPHP v6.x](https://www.kancloud.cn/manual/thinkphp6_0/content)
+* [ThinkAdmin](https://thinkadmin.top/README)
+* [CatchAdmin](https://www.catchadmin.com/docs/)
 
