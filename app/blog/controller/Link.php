@@ -1,5 +1,5 @@
 <?php
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace app\blog\controller;
 
@@ -11,9 +11,21 @@ class Link
     {
         View::assign('title', 'ThinkBIM - 链接');
         $list = [
-            ['url' => 'http://web.thinkbim.io','name'=>'ThinkBIM','logo'=>'http://web.thinkbim.io/static/logo.png']
+            [
+                'url'  => 'http://www.thinkbim.cn',
+                'name' => 'ThinkBIM',
+                'dec' => '个人技术栈',
+                'logo' => 'http://www.thinkbim.cn/static/logo.png',
+            ],
+            [
+                'url'  => 'http://www.hateghost.com',
+                'name' => 'HateGhost',
+                'dec' => '个人主页，联系QQ517966909',
+                'logo' => 'http://www.hateghost.com/public/static/logo.png',
+            ],
         ];
         View::assign('list', $list);
+
         return View::fetch();
     }
 }
