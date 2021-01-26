@@ -8,7 +8,7 @@ class Callback
 {
     public function index()
     {
-       echo 1;die;
+
     }
 
 
