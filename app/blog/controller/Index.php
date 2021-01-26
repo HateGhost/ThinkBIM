@@ -3,6 +3,7 @@ declare (strict_types = 1);
 
 namespace app\blog\controller;
 
+use think\facade\Session;
 use think\facade\View;
 
 class Index
