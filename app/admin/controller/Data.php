@@ -2,8 +2,8 @@
 
 namespace app\admin\controller;
 
+// use think\admin\Controller;
 use ThinkBIM\AdminController;
-use think\facade\View;
 
 /**
  * 应用参数配置
@@ -44,12 +44,12 @@ class Data extends AdminController
      */
     public function about()
     {
-        View::assign('title', '关于我们描述');
-        View::assign('skey', 'about');
+        $this->title = '关于我们描述';
+        $this->skey = 'about';
 
         if ($this->request->isGet()) {
-            View::assign('data', sysdata('about'));
-            return View::fetch('content');
+            $this->assign('data', sysdata('about'));
+            $this->fetch('content');
         } elseif ($this->request->isPost()) {
             if (is_string(input('data'))) {
                 $data = json_decode(input('data'), true) ?: [];
